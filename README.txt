@@ -1,0 +1,1 @@
+Self-contained KBK Academy website. Open index.html directly in a browser. The CSS and academy poster are embedded in the HTML, so there are no missing local dependencies.
