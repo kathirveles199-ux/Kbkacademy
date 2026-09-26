@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -18,6 +18,40 @@
 .pathways{background:#fff}.pathway-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}.pathway-card{min-height:360px;border-radius:24px;padding:28px;position:relative;overflow:hidden;display:flex;flex-direction:column}.pathway-dark{background:#0a3d2c;color:#fff}.pathway-green{background:#d9ee9a;color:#143b2b}.pathway-light{background:#eef3ef;color:#12382b}.pathway-no{position:absolute;right:22px;top:20px;font:800 10px Manrope;opacity:.42}.pathway-icon{font-size:30px;margin-bottom:30px}.pathway-label{font-size:9px;letter-spacing:1.6px;font-weight:900;opacity:.75}.pathway-card h3{font-size:27px;line-height:1.05;letter-spacing:-1px;margin:11px 0}.pathway-card p{font-size:13px;line-height:1.7;opacity:.78;max-width:360px}.pathway-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto;padding-top:20px}.pathway-tags span{font-size:9px;border:1px solid rgba(255,255,255,.2);padding:7px 9px;border-radius:99px}.pathway-green .pathway-tags span,.pathway-light .pathway-tags span{border-color:rgba(18,56,43,.16)}.modern-section{background:#f1f5ef}.modern-top{display:grid;grid-template-columns:1fr .72fr;gap:70px;align-items:end}.modern-intro p{color:#63736c;font-size:14px;line-height:1.8;margin:14px 0 0}.modern-pill{display:inline-flex;border:1px solid #cddbcf;border-radius:99px;padding:7px 10px;font-size:8px;font-weight:900;letter-spacing:1.3px;color:#337052;background:#fff}.modern-grid{display:grid;grid-template-columns:1.2fr .9fr .9fr;gap:16px;margin-top:45px}.modern-card{min-height:330px;border-radius:22px;padding:26px;position:relative;overflow:hidden}.modern-main{background:#082f23;color:#fff}.ai-mid{background:#d5ef9a;color:#153c2c}.ai-light{background:#fff;border:1px solid #dce5dd}.modern-step{position:absolute;right:20px;top:18px;font:800 10px Manrope;opacity:.42}.modern-symbol{display:block;font-size:27px;margin-bottom:25px}.modern-card h3{font-size:25px;line-height:1.05;margin:0 0 10px}.modern-card p{font-size:12px;line-height:1.7;opacity:.78;max-width:360px}.modern-example{margin-top:28px;padding:14px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}.modern-example small{display:block;font-size:8px;letter-spacing:1.2px;color:#c7e95b;font-weight:900;margin-bottom:6px}.modern-example b{font-size:11px;line-height:1.5;display:block}.modern-mini{margin-top:auto;padding-top:24px;font-size:10px;font-weight:900;letter-spacing:.4px;opacity:.7}.modern-note{margin-top:16px;border-top:1px solid #d4dfd7;padding-top:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}.modern-note span{font-size:8px;letter-spacing:1.4px;font-weight:900;color:#33805b}.modern-note strong{font:800 14px Manrope}.modern-note em{font-size:11px;color:#77877f;font-style:normal}
 @media(max-width:950px){.pathway-grid,.modern-grid{grid-template-columns:1fr 1fr}.pathway-card:first-child,.modern-main{grid-column:span 2}.modern-top{grid-template-columns:1fr;gap:18px}}
 @media(max-width:620px){.wrap{width:min(92%,560px)}.hero{padding-top:45px}.hero-layout{gap:10px}.hero-main{min-width:0}.micro{font-size:8px;line-height:1.5;letter-spacing:1.1px}.hero h1{font-size:clamp(43px,13vw,58px);letter-spacing:-2.8px;line-height:.96;margin:17px 0}.lead{font-size:16px;line-height:1.6}.hero-actions{margin-top:22px}.hero-actions .button{width:100%}.trust-row{width:100%;justify-content:space-between;gap:8px}.trust-row div b{font-size:12px}.trust-row div span{font-size:8px}.hero-visual{min-height:390px;margin-top:0}.visual-orb{width:330px;height:330px}.poster-frame{width:72%;max-width:300px}.float-card{padding:9px 11px}.float-card b{font-size:10px}.float-card small{font-size:8px}.float-top{right:0;top:35px}.float-bottom{left:0;bottom:30px}.pathway-grid,.modern-grid{grid-template-columns:1fr}.pathway-card:first-child,.modern-main{grid-column:auto}.pathway-card{min-height:320px}.modern-card{min-height:300px}.modern-top{gap:10px}.modern-note{display:block}.modern-note strong,.modern-note em{display:block;margin-top:7px}}
+
+/* KBK Exam Opportunities — integrated into existing UI */
+.exam-opportunities{background:#fff}
+.exam-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:30px 0 20px}
+.exam-filter{border:1px solid #dce5dd;background:#f7faf5;color:#315348;border-radius:999px;padding:9px 13px;font:700 11px "DM Sans",sans-serif;cursor:pointer}
+.exam-filter.active{background:#0a3d2c;color:#c6e83b;border-color:#0a3d2c}
+.exam-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.exam-card{border:1px solid #dce5dd;border-radius:20px;padding:22px;background:#f8faf7;position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:270px}
+.exam-card:before{content:"";position:absolute;width:130px;height:130px;border-radius:50%;background:#dff0aa;right:-50px;top:-55px;opacity:.55}
+.exam-status{display:inline-flex;align-self:flex-start;padding:6px 9px;border-radius:999px;background:#e7f4d7;color:#35651f;font-size:8px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.exam-card h3{font-size:21px;margin:18px 0 8px;position:relative}
+.exam-meta{font-size:11px;line-height:1.65;color:#6c7c75;position:relative}
+.exam-dates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
+.exam-date{padding:10px;border-radius:12px;background:#fff;border:1px solid #e4ebe5}
+.exam-date small{display:block;color:#8b9992;font-size:8px;text-transform:uppercase;letter-spacing:.8px}
+.exam-date b{display:block;font-size:11px;margin-top:3px}
+.exam-actions{margin-top:auto;padding-top:18px;display:flex;gap:8px;flex-wrap:wrap}
+.exam-actions a,.exam-actions button{border:0;border-radius:999px;padding:9px 12px;font:800 10px "DM Sans",sans-serif;cursor:pointer}
+.exam-start{background:#0b7a48;color:#fff}
+.exam-more{background:#eaf0eb;color:#173d2e}
+.exam-empty{padding:25px;border:1px dashed #cbd8cf;border-radius:18px;color:#718078;font-size:13px}
+.kbk-plan-modal{position:fixed;inset:0;background:rgba(4,28,20,.58);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px;z-index:200}
+.kbk-plan-modal.open{display:flex}
+.kbk-plan-box{width:min(620px,100%);background:#fff;border-radius:24px;padding:28px;box-shadow:0 30px 90px rgba(0,0,0,.25)}
+.kbk-plan-box h3{font-size:28px;margin:0 0 8px;color:#0a3d2c}
+.kbk-plan-box p{font-size:13px;color:#697a72;line-height:1.7}
+.kbk-plan-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
+.kbk-plan-option{border:1px solid #dce5dd;border-radius:14px;padding:14px;background:#f7faf5}
+.kbk-plan-option b{display:block;font-size:12px}
+.kbk-plan-option span{font-size:10px;color:#718078}
+.kbk-close{float:right;border:0;background:#edf3ee;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px}
+@media(max-width:950px){.exam-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.exam-grid{grid-template-columns:1fr}.kbk-plan-options{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -29,6 +63,7 @@
         <span class="logo-copy"><b>KBK ACADEMY</b><small>& CAREER GUIDANCE</small></span>
       </a>
       <nav id="mainNav">
+        <a href="#exam-opportunities">Exams</a>
         <a href="#pathways">Pathways</a>
         <a href="#courses">Programs</a>
         <a href="#modern-learning">Modern Learning</a>
@@ -41,6 +76,31 @@
   </header>
 
   <main id="top">
+    
+    <section class="section exam-opportunities" id="exam-opportunities">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">EXAM OPPORTUNITIES</div>
+            <h2>Know what’s <em>next.</em></h2>
+          </div>
+          <p>Explore relevant competitive-exam pathways, check the key dates, and start with a structured preparation plan.</p>
+        </div>
+        <div class="exam-toolbar" id="examFilters">
+          <button class="exam-filter active" data-filter="All">All</button>
+          <button class="exam-filter" data-filter="TNPSC">TNPSC</button>
+          <button class="exam-filter" data-filter="SSC">SSC</button>
+          <button class="exam-filter" data-filter="RRB">RRB</button>
+          <button class="exam-filter" data-filter="Banking">Banking</button>
+          <button class="exam-filter" data-filter="Agriculture">Agriculture</button>
+        </div>
+        <div class="exam-grid" id="examGrid"></div>
+        <div style="margin-top:18px;font-size:10px;color:#87958e">
+          Dates shown here are sample pathway data for the current prototype. Official notifications should be verified before publishing live dates.
+        </div>
+      </div>
+    </section>
+
     <section class="hero">
       <div class="wrap hero-layout">
         <div class="hero-main">
@@ -48,7 +108,7 @@
           <h1>Build your<br><em>knowledge.</em><br>Navigate your career.</h1>
           <p class="lead">Competitive exam preparation, specialized exam pathways and practical career guidance — combining expert teaching, structured practice and modern learning methods.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#courses">Explore programs <span>↓</span></a>
+            <a class="button button-primary" href="#exam-opportunities">Explore exams <span>↓</span></a>
             <a class="button button-ghost" href="https://wa.me/916380148960?text=Hello%20KBK%20Academy%2C%20I%20want%20to%20know%20about%20the%20courses." target="_blank" rel="noopener">Talk to a mentor</a>
           </div>
           <div class="trust-row">
@@ -227,5 +287,100 @@
 
   <footer><div class="wrap footer-inner"><div><b>KBK ACADEMY</b><span>Knowledge • Brilliance • Key Skills</span></div><span>© 2026 KBK Academy & Career Guidance</span></div></footer>
   <script>document.querySelector(".hamb")?.addEventListener("click",()=>{const n=document.querySelector("nav"); if(n) n.style.display=n.style.display==="flex"?"none":"flex";});</script>
+
+<script>
+(function(){
+  const exams = [
+    {name:"TNPSC Group I",cat:"TNPSC",status:"Coming soon",authority:"Tamil Nadu Public Service Commission",open:"—",close:"—",date:"—"},
+    {name:"TNPSC Group II / IIA",cat:"TNPSC",status:"Coming soon",authority:"Tamil Nadu Public Service Commission",open:"—",close:"—",date:"—"},
+    {name:"SSC CGL",cat:"SSC",status:"Preparation pathway",authority:"Staff Selection Commission",open:"—",close:"—",date:"—"},
+    {name:"RRB NTPC",cat:"RRB",status:"Preparation pathway",authority:"Railway Recruitment Boards",open:"—",close:"—",date:"—"},
+    {name:"Banking Exams",cat:"Banking",status:"Preparation pathway",authority:"Banking recruitment pathway",open:"—",close:"—",date:"—"},
+    {name:"AO / AHO / AAO",cat:"Agriculture",status:"Specialized exam",authority:"Agriculture & horticulture recruitment",open:"—",close:"—",date:"—"}
+  ];
+
+  const grid = document.getElementById("examGrid");
+  const filters = document.querySelectorAll(".exam-filter");
+
+  function render(filter){
+    const list = filter==="All" ? exams : exams.filter(e=>e.cat===filter);
+    grid.innerHTML = list.map((e,i)=>`
+      <article class="exam-card">
+        <span class="exam-status">${e.status}</span>
+        <h3>${e.name}</h3>
+        <div class="exam-meta">${e.authority}</div>
+        <div class="exam-dates">
+          <div class="exam-date"><small>Application</small><b>${e.open==="—" ? "To be updated" : e.open}</b></div>
+          <div class="exam-date"><small>Exam date</small><b>${e.date==="—" ? "To be updated" : e.date}</b></div>
+        </div>
+        <div class="exam-actions">
+          <button class="exam-start" data-exam="${e.name}">Start preparing ↗</button>
+          <button class="exam-more" data-exam="${e.name}">View pathway</button>
+        </div>
+      </article>
+    `).join("");
+
+    grid.querySelectorAll(".exam-start").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        localStorage.setItem("kbkSelectedExam", btn.dataset.exam);
+        window.location.href="onboarding.html";
+      });
+    });
+
+    grid.querySelectorAll(".exam-more").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        localStorage.setItem("kbkSelectedExam", btn.dataset.exam);
+        document.getElementById("kbkPlanModal").classList.add("open");
+        document.getElementById("kbkSelectedExamName").textContent=btn.dataset.exam;
+      });
+    });
+  }
+
+  filters.forEach(f=>f.addEventListener("click",()=>{
+    filters.forEach(x=>x.classList.remove("active"));
+    f.classList.add("active");
+    render(f.dataset.filter);
+  }));
+  render("All");
+
+  // Existing mobile menu button gets a simple accessible scroll menu.
+  const hamb=document.querySelector(".hamb");
+  const nav=document.getElementById("mainNav");
+  if(hamb && nav){
+    hamb.addEventListener("click",()=>{
+      const visible=nav.style.display==="flex";
+      nav.style.display=visible?"none":"flex";
+      nav.style.flexDirection="column";
+      nav.style.position="absolute";
+      nav.style.right="4%";
+      nav.style.top="68px";
+      nav.style.padding="14px";
+      nav.style.background="#fff";
+      nav.style.borderRadius="14px";
+      nav.style.boxShadow="0 15px 40px rgba(0,0,0,.12)";
+    });
+  }
+
+  window.closeKbkPlan=function(){
+    document.getElementById("kbkPlanModal").classList.remove("open");
+  };
+})();
+</script>
+<div class="kbk-plan-modal" id="kbkPlanModal" role="dialog" aria-modal="true">
+  <div class="kbk-plan-box">
+    <button class="kbk-close" onclick="closeKbkPlan()" aria-label="Close">×</button>
+    <div class="eyebrow">KBK PREPARATION PATHWAY</div>
+    <h3 id="kbkSelectedExamName">Exam pathway</h3>
+    <p>Start with your baseline, identify your focus areas, and move through a structured preparation cycle.</p>
+    <div class="kbk-plan-options">
+      <div class="kbk-plan-option"><b>1. Discover</b><span>Understand the exam and eligibility.</span></div>
+      <div class="kbk-plan-option"><b>2. Assess</b><span>Take a baseline diagnostic.</span></div>
+      <div class="kbk-plan-option"><b>3. Prepare</b><span>Follow concept + practice cycles.</span></div>
+      <div class="kbk-plan-option"><b>4. Improve</b><span>Review mistakes and track progress.</span></div>
+    </div>
+    <a class="button button-primary" href="onboarding.html" onclick="localStorage.setItem('kbkSelectedExam', document.getElementById('kbkSelectedExamName').textContent)">Start onboarding <span>↗</span></a>
+  </div>
+</div>
+
 </body>
 </html>
