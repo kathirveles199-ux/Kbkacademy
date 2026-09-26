@@ -3,96 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KBK Academy — Student Onboarding</title>
-
+<title>KBK Academy — Student Onboarding & Diagnostic</title>
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}
+.wrap{max-width:1050px;margin:auto;padding:25px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.logo{font-size:22px;font-weight:800;color:#10243e}.logo small{display:block;color:#64748b;font-size:12px;margin-top:4px}
+.progress{height:8px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin:18px 0 28px}.bar{height:100%;background:#2563eb;width:25%;transition:.25s}
+.card{background:#fff;border:1px solid #e1e6ee;border-radius:16px;padding:25px;box-shadow:0 8px 25px rgba(15,23,42,.06)}
+h1{margin:0 0 8px;font-size:28px}h2{margin-top:0}p{color:#64748b;line-height:1.55}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.field label{display:block;font-weight:700;font-size:13px;margin-bottom:7px}.field input,.field select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px}
+.full{grid-column:1/-1}.actions{display:flex;justify-content:space-between;margin-top:25px;gap:10px}.btn{padding:11px 17px;border-radius:9px;border:1px solid #d8dee8;background:white;font-weight:700}.primary{background:#2563eb;color:white;border-color:#2563eb}
+.hidden{display:none}.question{padding:18px 0;border-bottom:1px solid #e5e7eb}.question:last-child{border:0}.q{font-weight:700;margin-bottom:12px}.option{display:block;padding:9px 10px;margin:6px 0;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer}.option:hover{background:#f8fafc}
+.result{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.score{padding:18px;border-radius:12px;background:#eef5ff;text-align:center}.score strong{display:block;font-size:27px;margin-top:5px}
+.plan{padding:14px;border:1px solid #e2e8f0;border-radius:10px;margin:9px 0}.tag{display:inline-block;background:#dcfce7;color:#15803d;padding:4px 8px;border-radius:20px;font-size:11px;font-weight:800}
+@media(max-width:700px){.grid,.result{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="logo">KBK Academy<small>Learn • Prepare • Navigate • Achieve</small></div>
+    <div id="stepText">Step 1 of 4</div>
+  </div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
 
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f5f7fb;
- color:#172033;
+  <section class="card" id="step1">
+    <h1>Let's understand your goal</h1>
+    <p>KBK will use this information to shape your preparation journey.</p>
+    <div class="grid">
+      <div class="field"><label>Name</label><input id="name" placeholder="Your name"></div>
+      <div class="field"><label>Education</label><select id="education"><option>12th / Higher Secondary</option><option>Diploma</option><option>Undergraduate</option><option>Postgraduate</option><option>Other</option></select></div>
+      <div class="field"><label>Primary career goal</label><select id="goal"><option>Government Job</option><option>Higher Education</option><option>Professional Career</option><option>Exploring Options</option></select></div>
+      <div class="field"><label>Target exam</label><select id="target"><option>TNPSC</option><option>SSC</option><option>UPSC</option><option>RRB</option><option>Banking</option><option>Agriculture / Horticulture</option><option>Not decided</option></select></div>
+      <div class="field full"><label>Study availability per day</label><select id="hours"><option>Less than 1 hour</option><option>1–2 hours</option><option>2–4 hours</option><option>4+ hours</option></select></div>
+    </div>
+    <div class="actions"><span></span><button class="btn primary" onclick="next()">Continue →</button></div>
+  </section>
+
+  <section class="card hidden" id="step2">
+    <h2>Your baseline diagnostic</h2>
+    <p>Answer these questions without looking up the answers. The purpose is to understand your starting point, not to judge you.</p>
+    <div id="questions"></div>
+    <div class="actions"><button class="btn" onclick="prev()">← Back</button><button class="btn primary" onclick="submitDiagnostic()">Finish Diagnostic →</button></div>
+  </section>
+
+  <section class="card hidden" id="step3">
+    <h2>Your starting point</h2>
+    <p id="summary"></p>
+    <div class="result">
+      <div class="score"><span>Overall</span><strong id="overall">0%</strong></div>
+      <div class="score"><span>Correct</span><strong id="correct">0/10</strong></div>
+      <div class="score"><span>Focus Areas</span><strong id="focusCount">0</strong></div>
+    </div>
+    <h3>Initial focus areas</h3>
+    <div id="focus"></div>
+    <div class="actions"><button class="btn" onclick="prev()">← Review</button><button class="btn primary" onclick="next()">See My Plan →</button></div>
+  </section>
+
+  <section class="card hidden" id="step4">
+    <h2>Your first 7-day preparation plan</h2>
+    <p id="planIntro"></p>
+    <div id="plan"></div>
+    <div class="actions"><button class="btn" onclick="prev()">← Back</button><button class="btn primary" onclick="alert('Demo complete. In the real platform this plan will be saved to the student dashboard.')">Go to Student Dashboard →</button></div>
+  </section>
+</div>
+
+<script>
+const qs=[
+ ["General Studies","Which institution is primarily responsible for conducting TNPSC examinations?","Tamil Nadu Public Service Commission","UPSC","SSC","RRB"],
+ ["Aptitude","If a number is increased by 20% and becomes 120, what was the original number?","100","96","110","80"],
+ ["Reasoning","Find the next number: 2, 4, 8, 16, ?","32","24","30","36"],
+ ["Polity","The Constitution of India came into effect on:","26 January 1950","15 August 1947","26 November 1949","2 October 1950"],
+ ["Economy","GDP is commonly used to measure:","Value of final goods and services produced","Government revenue only","Exports only","Population growth"],
+ ["Current Affairs","Which is the best primary source for a government recruitment notification?","Official recruiting authority notification","Social media post","Unverified coaching message","Anonymous website"],
+ ["English","Choose the correctly spelled word:","Separate","Seperate","Seperrate","Separete"],
+ ["Science","Plants prepare food mainly through:","Photosynthesis","Respiration","Transpiration","Germination"],
+ ["Agriculture","Which nutrient is generally associated with leafy vegetative growth?","Nitrogen","Phosphorus","Potassium","Sulphur"],
+ ["History","The Indian national movement was primarily directed against:","British colonial rule","Mughal rule","French rule","Portuguese rule"]
+];
+let step=1, answers=[];
+function renderQuestions(){document.getElementById("questions").innerHTML=qs.map((x,i)=>`<div class="question"><div class="q">${i+1}. ${x[1]} <small style="color:#64748b">(${x[0]})</small></div>${x.slice(2).map((o,j)=>`<label class="option"><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")}</div>`).join("")}
+function show(n){step=n;for(let i=1;i<=4;i++)document.getElementById("step"+i).classList.toggle("hidden",i!==n);document.getElementById("bar").style.width=(n*25)+"%";document.getElementById("stepText").textContent=`Step ${n} of 4`}
+function next(){if(step===1){if(!document.getElementById("name").value.trim()){alert("Please enter your name.");return}show(2)}else if(step===3)show(4)}
+function prev(){show(step-1)}
+function submitDiagnostic(){
+ answers=qs.map((_,i)=>{let x=document.querySelector(`input[name=q${i}]:checked`);return x?Number(x.value):-1});
+ let correct=answers.reduce((n,a,i)=>n+(a===0?1:0),0), pct=Math.round(correct/qs.length*100);
+ document.getElementById("overall").textContent=pct+"%";document.getElementById("correct").textContent=correct+"/"+qs.length;
+ let weak=qs.filter((_,i)=>answers[i]!==0).map(x=>x[0]);let unique=[...new Set(weak)];
+ document.getElementById("focusCount").textContent=unique.length;
+ document.getElementById("focus").innerHTML=unique.length?unique.map(x=>`<div class="plan"><span class="tag">Focus</span><strong> ${x}</strong><p style="margin:7px 0 0">Include this area in the first revision cycle.</p></div>`).join(""):`<div class="plan"><span class="tag">Strong start</span><strong> Keep building consistency</strong></div>`;
+ document.getElementById("summary").textContent=`${document.getElementById("name").value}, this diagnostic gives KBK a baseline for your ${document.getElementById("target").value} preparation.`;
+ show(3);
 }
-
-.container{
- max-width:1050px;
- margin:auto;
- padding:25px;
+function makePlan(){
+ let target=document.getElementById("target").value,hours=document.getElementById("hours").value;
+ document.getElementById("planIntro").textContent=`Target: ${target} • Available: ${hours} per day. Your first cycle follows Learn → Practice → Review → Revise.`;
+ const days=["Day 1 — Foundation","Day 2 — Concept + Practice","Day 3 — Aptitude & Reasoning","Day 4 — General Studies","Day 5 — Previous-Year Questions","Day 6 — Revision + Mistake Review","Day 7 — Mini Mock + Weekly Review"];
+ document.getElementById("plan").innerHTML=days.map((d,i)=>`<div class="plan"><strong>${d}</strong><p>${i===6?"Attempt a short mock and record accuracy, time and mistakes.":"Study one focused topic, attempt practice questions, review mistakes and record what needs revision."}</p></div>`).join("");
 }
-
-.header{
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin-bottom:20px;
-}
-
-.logo{
- font-size:22px;
- font-weight:800;
- color:#10243e;
-}
-
-.logo small{
- display:block;
- color:#64748b;
- font-size:12px;
- margin-top:4px;
-}
-
-.progress{
- height:8px;
- background:#e2e8f0;
- border-radius:20px;
- overflow:hidden;
- margin-bottom:28px;
-}
-
-.progress-bar{
- height:100%;
- background:#2563eb;
- width:25%;
- transition:.3s;
-}
-
-.card{
- background:white;
- border:1px solid #e1e6ee;
- border-radius:16px;
- padding:26px;
- box-shadow:0 8px 25px rgba(15,23,42,.06);
-}
-
-h1{
- margin:0 0 8px;
- font-size:28px;
-}
-
-h2{
- margin-top:0;
-}
-
-p{
- color:#64748b;
- line-height:1.55;
-}
-
-.grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:16px;
- margin-top:20px;
-}
-
-.field label{
- display:block;
- font-size:13px;
- font-weight:bold;
- margin-bottom:7px;
-}
-
-.field input,
-.field select{
- width:100%;
- padding:
+const oldNext=next; next=function(){if(step===1){if(!document.getElementById("name").value.trim()){alert("Please enter your name.");return}show(2)}else if(step===3){makePlan();show(4)}};
+renderQuestions();show(1);
+</script>
+</body>
+</html>
