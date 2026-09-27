@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KBK Academy — Exam Diagnostic</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7f2;color:#17221b;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:920px;margin:auto;padding:24px 16px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.logo{font-weight:900;font-size:20px;color:#14532d}.logo small{display:block;font-size:11px;color:#64748b;margin-top:4px}
+#stepText{font-size:13px;font-weight:800;color:#64748b}
+.progress{height:7px;background:#e2e8df;border-radius:99px;overflow:hidden;margin-bottom:22px}
+.bar{height:100%;width:0;background:#166534;transition:.25s}
+.card{background:#fff;border:1px solid #dfe7df;border-radius:18px;padding:28px;box-shadow:0 8px 30px rgba(20,60,30,.05)}
+.hidden{display:none}
+.eyebrow{font-size:11px;letter-spacing:.12em;font-weight:900;color:#15803d;margin-bottom:8px}
+h1{font-size:32px;line-height:1.12;margin:0 0 10px}h2{font-size:26px;margin:0 0 8px}h3{margin-top:24px}
+p{color:#5d6b62;line-height:1.6}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:23px}
+.full{grid-column:1/-1}
+.field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}
+.field input,.field select{width:100%;padding:13px;border:1px solid #ccd7ce;border-radius:10px;background:#fff;font:inherit;color:#17221b}
+.actions{display:flex;justify-content:space-between;align-items:center;margin-top:28px;gap:10px}
+.btn{padding:12px 18px;border-radius:10px;border:1px solid #ccd7ce;background:#fff;font-weight:800;cursor:pointer}
+.primary{background:#166534;color:#fff;border-color:#166534}
+.note{margin-top:19px;padding:13px 15px;border-radius:11px;background:#f0fdf4;border:1px solid #bbf7d0;color:#36513e;font-size:13px;line-height:1.5}
+.diagnostic-meta{display:flex;gap:8px;flex-wrap:wrap;color:#64748b;font-size:12px;font-weight:700;margin:16px 0}
+.blueprint{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0 4px}
+.chip{padding:6px 9px;border-radius:20px;background:#eef7ef;color:#166534;font-size:11px;font-weight:800}
+.question{padding:19px 0;border-bottom:1px solid #e7ece8}.q{font-weight:800;line-height:1.5;margin-bottom:7px}
+.subject{display:inline-block;color:#15803d;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+.option{display:block;padding:10px 12px;margin:7px 0;border:1px solid #e2e8e4;border-radius:9px;cursor:pointer}
+.option:hover{background:#f7faf7}
+.result{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+.score{padding:18px;border-radius:13px;background:#f0fdf4;text-align:center;border:1px solid #dcfce7}
+.score span{font-size:12px;color:#64748b;font-weight:700}.score strong{display:block;font-size:28px;margin-top:5px;color:#14532d}
+.plan{padding:15px;border:1px solid #e2e8e4;border-radius:11px;margin:10px 0;background:#fbfdfb}
+.plan strong{display:block}.plan p{margin:5px 0 0;font-size:13px}
+.tag{display:inline-block;background:#dcfce7;color:#166534;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:900;margin-bottom:7px}
+.subject-result{display:grid;grid-template-columns:1fr 90px;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid #edf1ee}
+.subject-result:last-child{border-bottom:0}.meter{height:8px;background:#e5ebe6;border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;background:#3b8f57}
+@media(max-width:700px){.wrap{padding:16px 11px 40px}.card{padding:20px}.grid,.result{grid-template-columns:1fr}.full{grid-column:auto}h1{font-size:28px}h2{font-size:23px}.actions{flex-direction:column-reverse}.actions .btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="logo">KBK Academy<small>Learn • Prepare • Navigate • Achieve</small></div>
+  <div id="stepText">Step 1 of 5</div>
+</header>
+<div class="progress"><div class="bar" id="bar"></div></div>
+
+<section class="card" id="step1">
+  <div class="eyebrow">START HERE</div>
+  <h1>Let's understand you first.</h1>
+  <p>Your answers will shape the diagnostic and the first learning cycle KBK gives you.</p>
+  <div class="grid">
+    <div class="field"><label>Name *</label><input id="name" placeholder="Your name"></div>
+    <div class="field"><label>Current status</label><select id="status"><option>School student</option><option>College student</option><option>Graduate</option><option>Working professional</option><option>Job seeker</option><option>Other</option></select></div>
+    <div class="field"><label>Highest education</label><select id="education"><option>12th / Higher Secondary</option><option>Diploma</option><option>Undergraduate</option><option>Postgraduate</option><option>Other</option></select></div>
+    <div class="field"><label>Field / specialization</label><input id="specialization" placeholder="e.g. B.Sc Agriculture, B.Com, Engineering"></div>
+  </div>
+  <div class="actions"><span></span><button class="btn primary" onclick="nextStep()">Continue →</button></div>
+</section>
+
+<section class="card hidden" id="step2">
+  <div class="eyebrow">EXAM PATHWAY</div>
+  <h2>Which exam are you preparing for?</h2>
+  <p>The exam you select will determine the subjects and question mix in your diagnostic.</p>
+  <div class="grid">
+    <div class="field full"><label>Exam family</label><select id="pathway" onchange="updateTargets()">
+      <option value="TNPSC">TNPSC</option><option value="SSC">SSC</option><option value="RRB">RRB</option>
+      <option value="Banking">Banking</option><option value="UPSC">UPSC</option><option value="NEET">NEET</option>
+      <option value="Agriculture">Agriculture & Horticulture</option>
+    </select></div>
+    <div class="field full"><label>Specific target</label><select id="target" onchange="updateBlueprint()"></select></div>
+    <div class="field"><label>Daily study availability</label><select id="hours"><option>Less than 1 hour</option><option>1–2 hours</option><option>2–4 hours</option><option>4+ hours</option></select></div>
+    <div class="field"><label>Preparation stage</label><select id="stage"><option>Just starting</option><option>Already studying</option><option>Revision stage</option><option>Preparing for an upcoming attempt</option></select></div>
+  </div>
+  <div class="note"><strong id="blueprintTitle">Diagnostic blueprint</strong><div id="blueprint" class="blueprint"></div></div>
+  <div class="actions"><button class="btn" onclick="showStep(1)">← Back</button><button class="btn primary" onclick="startDiagnostic()">Start Exam Diagnostic →</button></div>
+</section>
+
+<section class="card hidden" id="step3">
+  <div class="eyebrow">EXAM-SPECIFIC DIAGNOSTIC</div>
+  <h2 id="diagTitle">Your diagnostic</h2>
+  <p id="diagIntro"></p>
+  <div class="diagnostic-meta"><span id="questionCount"></span><span>•</span><span>Concept + application questions</span><span>•</span><span>Not a pass/fail test</span></div>
+  <div id="questions"></div>
+  <div class="actions"><button class="btn" onclick="showStep(2)">← Back</button><button class="btn primary" onclick="submitDiagnostic()">Analyse My Baseline →</button></div>
+</section>
+
+<section class="card hidden" id="step4">
+  <div class="eyebrow">YOUR BASELINE</div>
+  <h2>Here is where you stand today.</h2>
+  <p id="summary"></p>
+  <div class="result">
+    <div class="score"><span>Overall</span><strong id="overall">0%</strong></div>
+    <div class="score"><span>Correct</span><strong id="correct">0/0</strong></div>
+    <div class="score"><span>Focus Areas</span><strong id="focusCount">0</strong></div>
+  </div>
+  <h3>Subject-wise baseline</h3><div id="subjectResults"></div>
+  <h3>First focus areas</h3><div id="focus"></div>
+  <div class="note">This is a starting baseline. KBK should reassess you as you learn and practise; one diagnostic should not permanently label your ability.</div>
+  <div class="actions"><button class="btn" onclick="showStep(3)">← Review Diagnostic</button><button class="btn primary" onclick="buildPlanAndShow()">Build My 7-Day Plan →</button></div>
+</section>
+
+<section class="card hidden" id="step5">
+  <div class="eyebrow">YOUR FIRST LEARNING CYCLE</div>
+  <h2>Your plan is built around your exam.</h2>
+  <p id="planIntro"></p>
+  <div id="plan"></div>
+  <div class="note"><strong>Next step:</strong> your profile, exam target, diagnostic and first learning cycle will move into the student dashboard.</div>
+  <div class="actions"><button class="btn" onclick="showStep(4)">← Back</button><button class="btn primary" onclick="goToDashboard()">Open My Dashboard →</button></div>
+</section>
+</div>
+
+<script>
+const examTargets={
+  TNPSC:["TNPSC Group I","TNPSC Group II / IIA","TNPSC Group IV"],
+  SSC:["SSC CGL","SSC CHSL"],
+  RRB:["RRB NTPC Graduate","RRB NTPC Undergraduate","RRB Group D"],
+  Banking:["IBPS PO / MT","IBPS Clerk / CSA","SBI PO / Clerk"],
+  UPSC:["UPSC Civil Services (Prelims)"],
+  NEET:["NEET-UG"],
+  Agriculture:["Agriculture Officer (AO)","Assistant Horticulture Officer (AHO)","Assistant Agriculture Officer (AAO)","ASRB NET","ICAR"]
+};
+
+const blueprints={
+  "TNPSC Group I":["General Studies","Current Affairs","Indian Polity","Economy","History & Culture","Tamil Nadu","Geography","Science","Aptitude & Mental Ability"],
+  "TNPSC Group II / IIA":["General Tamil / English","General Studies","Tamil Nadu","Polity","Economy","History","Geography","Science","Aptitude & Mental Ability"],
+  "TNPSC Group IV":["General Tamil / English","General Studies","Tamil Nadu","Polity","Economy","History","Geography","Science","Aptitude & Mental Ability"],
+  "SSC CGL":["General Intelligence & Reasoning","Quantitative Aptitude","English","General Awareness"],
+  "SSC CHSL":["General Intelligence","Quantitative Aptitude","English","General Awareness"],
+  "RRB NTPC Graduate":["General Awareness","Mathematics","General Intelligence & Reasoning"],
+  "RRB NTPC Undergraduate":["General Awareness","Mathematics","General Intelligence & Reasoning"],
+  "RRB Group D":["General Science","Mathematics","General Intelligence & Reasoning","General Awareness"],
+  "IBPS PO / MT":["English Language","Quantitative Aptitude","Reasoning Ability"],
+  "IBPS Clerk / CSA":["English Language","Numerical Ability","Reasoning Ability"],
+  "SBI PO / Clerk":["English Language","Quantitative Aptitude","Reasoning Ability"],
+  "UPSC Civil Services (Prelims)":["History","Geography","Polity & Governance","Economy","Environment","Science & Technology","Current Affairs","CSAT"],
+  "NEET-UG":["Physics","Chemistry","Biology"],
+  "Agriculture Officer (AO)":["Agronomy","Soil Science","Horticulture","Plant Protection","Agricultural Economics","Agricultural Extension","General Agriculture"],
+  "Assistant Horticulture Officer (AHO)":["Horticulture","Plant Science","Soil Science","Plant Protection","Agricultural Extension"],
+  "Assistant Agriculture Officer (AAO)":["Agronomy","Soil Science","Horticulture","Plant Protection","Agricultural Economics","General Agriculture"],
+  "ASRB NET":["Agriculture / chosen discipline","Core subject concepts","Applied agriculture"],
+  "ICAR":["Agriculture / chosen discipline","Basic Sciences","General Agriculture"]
+};
+
+const bank={
+  "TNPSC Group II / IIA":[
+    ["Polity","Which constitutional provision is associated with equality before law?","Article 14","Article 19","Article 21","Article 32"],
+    ["Economy","Which institution is responsible for monetary policy in India?","Reserve Bank of India","Finance Commission","NITI Aayog","SEBI"],
+    ["History","The Swadeshi movement was closely associated with opposition to the:","Partition of Bengal","Rowlatt Act","Simon Commission","Government of India Act 1935"],
+    ["Tamil Nadu","The Self-Respect Movement was associated with:","E. V. Ramasamy","C. Rajagopalachari","Subramania Bharati","V. O. Chidambaram"],
+    ["Geography","Which river is a major east-flowing river of Tamil Nadu?","Cauvery","Narmada","Tapi","Mahi"],
+    ["Science","Which vitamin is synthesized in the skin in response to sunlight?","Vitamin D","Vitamin C","Vitamin K","Vitamin B12"],
+    ["Aptitude","A sum of ₹800 is increased by 15%. The new value is:","₹920","₹900","₹940","₹960"],
+    ["Reasoning","If CAT is coded as DBU, DOG would be coded as:","EPH","EOH","FPH","DPG"],
+    ["Current Affairs","For an exam question about a newly announced government scheme, the best source to verify its details is:","The official government notification","An anonymous social post","A forwarded message","An unsourced blog"],
+    ["Tamil / English","Choose the word closest in meaning to 'concise':","Brief","Confusing","Lengthy","Doubtful"],
+    ["Polity","The Directive Principles of State Policy are contained in:","Part IV","Part III","Part V","Part II"],
+    ["Economy","GDP measures the value of:","Final goods and services produced within an economy","Only agricultural output","Only government expenditure","Only exports"],
+    ["History","The Government of India Act, 1935 introduced:","Provincial autonomy","Universal adult franchise","Complete independence","The Constitution"],
+    ["Tamil Nadu","The state of Tamil Nadu was renamed from Madras State in:","1969","1950","1956","1977"],
+    ["Aptitude","If 3 workers complete a task in 12 days at the same rate, 6 workers would take:","6 days","4 days","8 days","18 days"],
+    ["Reasoning","Find the next number: 3, 6, 12, 24, ?","48","36","42","54"],
+    ["Geography","The Western Ghats influence Tamil Nadu mainly through their effect on:","Rainfall and river systems","Tides","Earthquakes","Sea level"],
+    ["Science","A pH value below 7 indicates a substance is generally:","Acidic","Basic","Neutral","Radioactive"],
+    ["General Studies","The Constitution of India came into force on:","26 January 1950","15 August 1947","26 November 1949","2 October 1950"],
+    ["Mental Ability","If all roses are flowers and some flowers fade quickly, which conclusion is definitely valid?","All roses are flowers","All flowers are roses","All roses fade quickly","No roses fade quickly"]
+  ],
+  "TNPSC Group I":[
+    ["Polity","The basic structure doctrine is associated with which Supreme Court case?","Kesavananda Bharati","Golaknath","Maneka Gandhi","Minerva Mills"],
+    ["Economy","Fiscal deficit broadly represents:","Excess of total expenditure over total receipts excluding borrowings","Total tax revenue","Exports minus imports","Revenue expenditure alone"],
+    ["History","The immediate context of the Quit India Movement was:","Failure of the Cripps Mission","Partition of Bengal","Simon Commission","Cabinet Mission"],
+    ["Tamil Nadu","The Justice Party was formed in the context of the:","Non-Brahmin movement","Swadeshi movement","Peasant movement in Bengal","Home Rule movement"],
+    ["Geography","El Niño is associated with abnormal warming of surface waters in the:","Central and eastern tropical Pacific","North Atlantic","Indian Ocean only","Arctic Ocean"],
+    ["Environment","The Ramsar Convention is primarily concerned with:","Wetlands","Deserts","Mountain glaciers","Forests"],
+    ["Science","CRISPR is primarily associated with:","Gene editing","Satellite navigation","Nuclear fission","Cloud computing"],
+    ["Aptitude","A train covers 180 km in 3 hours. Its average speed is:","60 km/h","50 km/h","70 km/h","90 km/h"],
+    ["Polity","The Finance Commission is constituted under:","Article 280","Article 324","Article 356","Article 368"],
+    ["Economy","Inflation targeting in India is formally associated with the:","Monetary Policy Committee","Finance Commission","GST Council","Election Commission"],
+    ["History","The Permanent Settlement was introduced under:","Lord Cornwallis","Lord Curzon","Lord Dalhousie","Lord Ripon"],
+    ["Tamil Nadu","The Sangam corpus is an important source for understanding:","Early Tamil society and culture","Mughal administration","Colonial industrialisation","Vedic astronomy"],
+    ["Geography","Black soil is particularly associated with the cultivation of:","Cotton","Tea","Rubber","Jute"],
+    ["Environment","The term biodiversity includes diversity at the level of:","Genes, species and ecosystems","Only species","Only genes","Only ecosystems"],
+    ["Science","Which technology converts sunlight directly into electricity?","Photovoltaic cells","Thermal turbines","Electrolysis","Geothermal pumps"],
+    ["Current Affairs","When evaluating a policy announced by a ministry, the first factual check should be against:","The official notification / ministry source","A social-media commentary","A forwarded infographic","An anonymous forum"],
+    ["Polity","Which body is responsible for conducting elections to Parliament and state legislatures?","Election Commission of India","UPSC","Finance Commission","CAG"],
+    ["Economy","The GST is best described as a:","Destination-based indirect tax","Direct income tax","Wealth tax","Customs-only tax"],
+    ["History","The Non-Cooperation Movement was withdrawn after the:","Chauri Chaura incident","Jallianwala Bagh incident","Dandi March","Poona Pact"],
+    ["Aptitude","A quantity is reduced from 500 to 425. The percentage decrease is:","15%","10%","12.5%","17.5%"]
+  ],
+  "RRB NTPC Graduate":[
+    ["Mathematics","25% of 240 is:","60","50","55","65"],
+    ["Mathematics","If x + 15 = 42, x equals:","27","25","29","32"],
+    ["Reasoning","Find the next number: 4, 9, 16, 25, ?","36","30","35","49"],
+    ["Reasoning","If TRAIN is coded as USBJO, then ROAD is coded as:","SPBE","SQBE","SPCE","RPBE"],
+    ["General Awareness","The Constitution of India came into force on:","26 January 1950","15 August 1947","26 November 1949","2 October 1950"],
+    ["General Science","Which gas is most abundant in Earth's atmosphere?","Nitrogen","Oxygen","Carbon dioxide","Argon"],
+    ["Mathematics","The average of 10, 20 and 30 is:","20","15","25","30"],
+    ["Reasoning","A is taller than B. B is taller than C. Who is shortest?","C","A","B","Cannot say"],
+    ["General Awareness","Which is the largest planet in the Solar System?","Jupiter","Saturn","Earth","Neptune"],
+    ["Mathematics","A train travels 120 km in 2 hours. Its speed is:","60 km/h","50 km/h","70 km/h","80 km/h"],
+    ["General Awareness","The Reserve Bank of India is India's central:","Banking institution","Election authority","Audit authority","Planning commission"],
+    ["Reasoning","Which one is different? 2, 4, 8, 16, 31","31","2","8","16"],
+    ["Mathematics","A ₹500 item is sold after a 10% discount. Selling price:","₹450","₹460","₹475","₹490"],
+    ["General Science","Photosynthesis mainly occurs in the:","Chloroplast","Nucleus","Ribosome","Cell wall"],
+    ["General Awareness","The Indian Parliament consists of the President and:","Lok Sabha and Rajya Sabha","Only Lok Sabha","Only Rajya Sabha","Supreme Court"],
+    ["Reasoning","If SOUTH is written as TPVUI, NORTH is written as:","OPSUI","OPSUH","NPSUI","OQTVI"],
+    ["Mathematics","The ratio 2:3 is equivalent to:","10:15","8:10","12:15","6:12"],
+    ["General Awareness","Which river is known as the longest river entirely within India?","Godavari","Ganga","Yamuna","Narmada"],
+    ["General Science","Which organ pumps blood through the human body?","Heart","Liver","Kidney","Lung"],
+    ["Reasoning","A clock shows 3:00. The angle between the hands is:","90°","60°","120°","180°"]
+  ],
+  "SSC CGL":[
+    ["General Intelligence & Reasoning","Find the next number: 2, 5, 10, 17, 26, ?","37","34","36","39"],
+    ["Quantitative Aptitude","A number increased by 20% becomes 240. The original number is:","200","192","210","220"],
+    ["English","Choose the correctly spelled word:","Accommodation","Acommodation","Accomodation","Accommadation"],
+    ["General Awareness","Fundamental Rights are primarily contained in:","Part III","Part IV","Part V","Part II"],
+    ["Reasoning","If PEN is coded as QFO, CAT is coded as:","DBU","DBT","CBU","EBU"],
+    ["Quantitative Aptitude","The simple interest on ₹1000 at 10% per year for 2 years is:","₹200","₹100","₹150","₹250"],
+    ["English","Choose the closest meaning of 'mitigate':","Reduce","Increase","Ignore","Measure"],
+    ["General Awareness","Which planet is known for its prominent ring system?","Saturn","Mars","Venus","Mercury"],
+    ["Reasoning","Which is different? 8, 27, 64, 100, 125","100","27","64","125"],
+    ["Quantitative Aptitude","If a:b = 3:4 and b:c = 2:5, then a:c is:","3:10","6:20","3:5","4:10"],
+    ["English","Identify the error: 'He do not know the answer.'","do","He","know","answer"],
+    ["General Awareness","The Green Revolution in India is primarily associated with increased production of:","Food grains","Cotton only","Tea","Jute"],
+    ["Quantitative Aptitude","A shopkeeper gives a 10% discount on ₹800. The selling price is:","₹720","₹700","₹740","₹760"],
+    ["Reasoning","A is the brother of B; B is the sister of C. A is C's:","Brother","Sister","Father","Uncle"],
+    ["English","Choose the antonym of 'scarce':","Abundant","Rare","Limited","Small"],
+    ["General Awareness","The Comptroller and Auditor General of India primarily audits:","Public accounts and government expenditure","Private household budgets","Election campaigns","School examinations"],
+    ["Quantitative Aptitude","The average of 12, 18, 24 and 30 is:","21","20","22","24"],
+    ["Reasoning","If all pens are instruments and some instruments are expensive, which is definitely true?","All pens are instruments","All instruments are pens","All pens are expensive","No pens are expensive"],
+    ["English","Choose the correct passive form: 'The committee approved the proposal.'","The proposal was approved by the committee.","The proposal is approve by the committee.","The committee was approved by the proposal.","The proposal approved the committee."],
+    ["General Awareness","The Tropic of Cancer passes through:","India","Sri Lanka","Indonesia","Australia"]
+  ],
+  "IBPS PO / MT":[
+    ["English Language","Choose the word closest in meaning to 'prudent':","Wise","Careless","Rapid","Distant"],
+    ["Quantitative Aptitude","If 15% of a number is 45, the number is:","300","250","275","350"],
+    ["Reasoning Ability","Find the next number: 3, 7, 15, 31, ?","63","47","55","61"],
+    ["English Language","Identify the correct sentence:","Each of the candidates has submitted the form.","Each of the candidates have submitted the form.","Each candidates has submitted the form.","Each candidate have submitted the form."],
+    ["Quantitative Aptitude","A sum of ₹5000 earns 8% simple interest for 2 years. Interest:","₹800","₹400","₹600","₹1000"],
+    ["Reasoning Ability","If BANK is coded as CBOL, LOAN is coded as:","MPBO","MPAN","MOBO","LPBO"],
+    ["English Language","Choose the antonym of 'transparent':","Opaque","Clear","Visible","Open"],
+    ["Quantitative Aptitude","The ratio of 40 to 60 in simplest form is:","2:3","3:2","4:5","1:2"],
+    ["Reasoning Ability","A is older than B; B is older than C. Who is youngest?","C","A","B","Cannot say"],
+    ["English Language","Choose the correctly spelled word:","Separate","Seperate","Seperrate","Separete"],
+    ["Quantitative Aptitude","If a train covers 150 km in 2.5 hours, speed is:","60 km/h","50 km/h","65 km/h","75 km/h"],
+    ["Reasoning Ability","Which one is different? 9, 16, 25, 36, 48","48","16","25","36"],
+    ["English Language","'Brief' is closest in meaning to:","Concise","Lengthy","Complex","Delayed"],
+    ["Quantitative Aptitude","A product priced ₹1200 is discounted by 15%. Price after discount:","₹1020","₹1040","₹1060","₹1080"],
+    ["Reasoning Ability","If SOUTH is coded as TPVUI, EAST is coded as:","FBTU","FBST","EBSU","FATU"],
+    ["English Language","Choose the correct form: 'Neither the manager nor the employees ___ available.'","were","was","is","be"],
+    ["Quantitative Aptitude","The average of 20, 30 and 40 is:","30","25","35","40"],
+    ["Reasoning Ability","A statement says all books are papers. Which conclusion is certain?","All books are papers","All papers are books","Some books are not papers","No books are papers"],
+    ["English Language","Choose the correct passive voice: 'They completed the work.'","The work was completed by them.","The work is completed by them.","The work completed them.","They were completed by the work."],
+    ["Quantitative Aptitude","If x/5 = 12, x is:","60","17","24","50"]
+  ],
+  "UPSC Civil Services (Prelims)":[
+    ["Polity & Governance","The power of judicial review in India is primarily concerned with:","Testing laws/actions against the Constitution","Making the Union Budget","Conducting elections","Appointing governors"],
+    ["Economy","Repo rate is the rate at which:","RBI lends to eligible banks against securities","Banks lend to RBI","Government lends to RBI","Banks lend directly to households"],
+    ["History","The Permanent Settlement was introduced by:","Lord Cornwallis","Lord Wellesley","Lord Curzon","Lord Ripon"],
+    ["Environment","A biodiversity hotspot is characterized by:","High endemism and significant habitat loss","Only high rainfall","Only large forests","Low species diversity"],
+    ["Geography","El Niño refers to abnormal warming of:","Central/eastern tropical Pacific waters","Arctic waters","North Atlantic waters","Indian coastal waters only"],
+    ["Science & Technology","CRISPR technology is primarily associated with:","Gene editing","Quantum encryption","Rocket propulsion","Solar cells"],
+    ["Polity & Governance","The Directive Principles of State Policy are:","Non-justiciable guidelines for governance","Fundamental Rights","Emergency provisions","Judicial powers"],
+    ["Economy","Fiscal deficit is broadly the excess of government expenditure over receipts excluding:","Borrowings","Tax revenue","Capital receipts","Non-tax revenue"],
+    ["History","The Cabinet Mission came to India in:","1946","1942","1947","1935"],
+    ["Geography","Black soil is particularly suitable for:","Cotton","Tea","Jute","Rubber"],
+    ["Environment","Ramsar sites are associated with the conservation of:","Wetlands","Deserts","Grasslands only","Coral reefs only"],
+    ["Science & Technology","Photovoltaic cells convert:","Light energy into electrical energy","Heat into sound","Electricity into fuel","Wind into heat"],
+    ["Polity & Governance","The Finance Commission is constituted under:","Article 280","Article 324","Article 356","Article 368"],
+    ["Economy","GST is primarily a:","Destination-based indirect tax","Direct tax","Corporate tax","Wealth tax"],
+    ["History","The Non-Cooperation Movement was withdrawn following:","Chauri Chaura","Dandi March","Poona Pact","Cripps Mission"],
+    ["Geography","Western disturbances are important sources of winter rainfall in:","Northwestern India","Tamil Nadu coast","Northeast India only","Deccan plateau only"],
+    ["Environment","Which is a greenhouse gas?","Methane","Nitrogen","Argon","Helium"],
+    ["Science & Technology","Which is an example of a renewable energy source?","Solar","Coal","Petroleum","Natural gas"],
+    ["Current Affairs","For a current policy claim, the strongest primary source is generally:","The official notification or government release","A social-media post","An anonymous article","A forwarded message"],
+    ["CSAT","If 20% of x is 50, x equals:","250","200","300","150"]
+  ],
+  "NEET-UG":[
+    ["Physics","The SI unit of force is:","Newton","Joule","Watt","Pascal"],
+    ["Chemistry","The atomic number of an element represents its number of:","Protons","Neutrons","Nucleons","Isotopes"],
+    ["Biology","The basic structural and functional unit of life is the:","Cell","Tissue","Organ","Organ system"],
+    ["Physics","Which quantity is a vector?","Velocity","Speed","Distance","Mass"],
+    ["Chemistry","A solution with pH 3 is:","Acidic","Basic","Neutral","Saline"],
+    ["Biology","Photosynthesis mainly takes place in the:","Chloroplast","Mitochondrion","Nucleus","Ribosome"],
+    ["Physics","The slope of a velocity-time graph represents:","Acceleration","Distance","Momentum","Force"],
+    ["Chemistry","The bond formed by sharing electron pairs is generally a:","Covalent bond","Ionic bond","Metallic bond","Hydrogen bond"],
+    ["Biology","DNA is primarily located in the:","Nucleus","Cell wall","Golgi apparatus","Lysosome"],
+    ["Physics","The kinetic energy of an object depends on its:","Mass and velocity","Only mass","Only height","Only volume"],
+    ["Chemistry","Which particle has a negative charge?","Electron","Proton","Neutron","Nucleus"],
+    ["Biology","The functional unit of the kidney is the:","Nephron","Neuron","Alveolus","Villus"],
+    ["Physics","Ohm's law is represented by:","V = IR","P = VI","F = ma","Q = It"],
+    ["Chemistry","The periodic table is arranged primarily by increasing:","Atomic number","Atomic mass only","Density","Melting point"],
+    ["Biology","Mendel's experiments were primarily concerned with:","Inheritance","Photosynthesis","Respiration","Evolution of galaxies"],
+    ["Physics","The acceleration due to gravity near Earth's surface is approximately:","9.8 m/s²","98 m/s²","0.98 m/s²","8.0 m/s²"],
+    ["Chemistry","A catalyst generally:","Changes reaction rate without being consumed overall","Always increases temperature","Changes equilibrium constant","Becomes the main product"],
+    ["Biology","Which blood cells primarily carry oxygen?","Red blood cells","Platelets","White blood cells","Plasma cells"],
+    ["Physics","The unit of electrical resistance is:","Ohm","Volt","Ampere","Coulomb"],
+    ["Biology","Insulin is produced by cells in the:","Pancreas","Liver","Kidney","Thyroid"]
+  ],
+  "Agriculture Officer (AO)":[
+    ["Agronomy","Which nutrient is most directly associated with vegetative growth and chlorophyll formation?","Nitrogen","Sodium","Chlorine","Silicon"],
+    ["Soil Science","Soil pH mainly indicates:","Acidity or alkalinity","Soil texture only","Organic carbon only","Water-holding capacity only"],
+    ["Horticulture","Grafting is primarily a method of:","Vegetative propagation","Seed dormancy","Soil testing","Irrigation"],
+    ["Plant Protection","Integrated Pest Management emphasizes:","Combining compatible control methods","Only chemical pesticides","Only biological control","Eliminating all insects"],
+    ["Agricultural Economics","Farm income is influenced directly by:","Yield and price received","Only rainfall","Only land area","Only fertilizer cost"],
+    ["Agricultural Extension","The main purpose of agricultural extension is to:","Facilitate useful knowledge and technology transfer to farmers","Replace farmers' decisions","Sell only fertilizers","Conduct laboratory experiments only"],
+    ["Agronomy","Crop rotation can help:","Break pest/disease cycles and improve soil management","Eliminate all weeds permanently","Replace irrigation","Increase soil salinity"],
+    ["Soil Science","Nitrogen fixation in legumes is associated with:","Rhizobium bacteria","Mycorrhiza only","Earthworms","Algae only"],
+    ["Horticulture","Pruning is commonly used to:","Manage plant growth and canopy","Increase soil pH","Control irrigation pressure","Measure seed moisture"],
+    ["Plant Protection","A disease caused by a fungus is a:","Fungal disease","Nutrient disorder","Genetic trait","Mechanical injury"],
+    ["Agronomy","Drip irrigation delivers water mainly:","Near the root zone","Only onto leaves","Across the entire field as flood water","Into the atmosphere"],
+    ["Soil Science","Organic matter generally helps soil by improving:","Structure and water-holding capacity","Only salinity","Only soil colour","Only temperature"],
+    ["Horticulture","Which is generally a fruit crop?","Mango","Wheat","Rice","Groundnut"],
+    ["Plant Protection","A weed is generally defined as:","A plant growing where it is not wanted","Any crop plant","Only a poisonous plant","Only a fungal organism"],
+    ["Agricultural Economics","A market price is affected by supply and:","Demand","Latitude","Soil colour","Day length"],
+    ["Agricultural Extension","A demonstration method in extension is useful because farmers can:","Observe a practice in operation","Avoid all field work","Skip evaluation","Ignore local conditions"],
+    ["Agronomy","Seed treatment is commonly used to:","Protect seed/seedlings and improve establishment","Increase market price directly","Change crop species","Replace irrigation"],
+    ["Soil Science","Which is a primary macronutrient for plants?","Phosphorus","Zinc","Boron","Molybdenum"],
+    ["Horticulture","A nursery is primarily used for:","Raising planting material","Storing harvested grain only","Testing tractors","Marketing fertilizers"],
+    ["General Agriculture","Sustainable agriculture aims to balance production with:","Long-term resource and environmental stewardship","Maximum input use regardless of impact","Only short-term yield","Only mechanisation"]
+  ]
+};
+
+function getQuestions(target){
+  let q=bank[target];
+  if(q) return q;
+  // Fallback keeps the diagnostic honest: use the selected exam's closest verified family.
+  if(target.includes("RRB")) return bank["RRB NTPC Graduate"];
+  if(target.includes("SSC")) return bank["SSC CGL"];
+  if(target.includes("IBPS")||target.includes("SBI")) return bank["IBPS PO / MT"];
+  if(target.includes("UPSC")) return bank["UPSC Civil Services (Prelims)"];
+  if(target.includes("NEET")) return bank["NEET-UG"];
+  if(target.includes("Agriculture")||target.includes("Horticulture")||target.includes("ASRB")||target.includes("ICAR")) return bank["Agriculture Officer (AO)"];
+  return bank["TNPSC Group II / IIA"];
+}
+
+let step=1,questions=[],answers=[],student={};
+
+const $=id=>document.getElementById(id);
+function updateTargets(){
+  const p=$("pathway"),t=$("target");
+  t.innerHTML=examTargets[p.value].map(x=>`<option>${x}</option>`).join("");
+  updateBlueprint();
+}
+function updateBlueprint(){
+  const t=$("target").value, list=blueprints[t]||[];
+  $("blueprintTitle").textContent=`Diagnostic blueprint for ${t}`;
+  $("blueprint").innerHTML=list.map(x=>`<span class="chip">${x}</span>`).join("");
+}
+function showStep(n){
+  step=n;
+  for(let i=1;i<=5;i++) $("step"+i).classList.toggle("hidden",i!==n);
+  $("bar").style.width=((n-1)/4*100)+"%";
+  $("stepText").textContent=`Step ${n} of 5`;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function saveDraft(){
+  student={
+    name:$("name").value.trim(),status:$("status").value,education:$("education").value,
+    specialization:$("specialization").value.trim(),pathway:$("pathway").value,
+    target:$("target").value,hours:$("hours").value,stage:$("stage").value
+  };
+  localStorage.setItem("kbkStudentDraft",JSON.stringify(student));
+}
+function nextStep(){
+  if(step===1){
+    if(!$("name").value.trim()){alert("Please enter your name.");return}
+    saveDraft();showStep(2);
+  }
+}
+function startDiagnostic(){
+  saveDraft();
+  questions=getQuestions(student.target);
+  answers=[];
+  $("diagTitle").textContent=`${student.target} — Baseline Diagnostic`;
+  $("diagIntro").textContent=`This diagnostic is aligned to the ${student.target} subject structure used by KBK for this prototype. It is a syllabus-aligned baseline, not an official exam paper.`;
+  $("questionCount").textContent=`${questions.length} questions`;
+  $("questions").innerHTML=questions.map((q,i)=>`
+    <div class="question">
+      <div class="q"><span>${i+1}.</span> ${q[1]}</div>
+      <small class="subject">${q[0]}</small>
+      ${q.slice(2).map((o,j)=>`<label class="option"><input type="radio" name="q${i}" value="${j}"> ${o}</label>`).join("")}
+    </div>`).join("");
+  showStep(3);
+}
+function submitDiagnostic(){
+  answers=questions.map((_,i)=>{const x=document.querySelector(`input[name="q${i}"]:checked`);return x?Number(x.value):-1});
+  const correct=answers.filter(x=>x===0).length;
+  const pct=Math.round(correct/questions.length*100);
+  const by={};
+  questions.forEach((q,i)=>{
+    if(!by[q[0]]) by[q[0]]={correct:0,total:0};
+    by[q[0]].total++;
+    if(answers[i]===0) by[q[0]].correct++;
+  });
+  const weak=Object.entries(by).filter(([,v])=>v.correct/v.total<0.6).sort((a,b)=>(a[1].correct/a[1].total)-(b[1].correct/b[1].total));
+  $("overall").textContent=pct+"%";
+  $("correct").textContent=`${correct}/${questions.length}`;
+  $("focusCount").textContent=weak.length;
+  $("summary").textContent=`${student.name}, this gives KBK a starting baseline for ${student.target}. The diagnostic is organised by subject so your first plan can target specific areas rather than treating the score as one overall number.`;
+  $("subjectResults").innerHTML=Object.entries(by).map(([s,v])=>{
+    const p=Math.round(v.correct/v.total*100);
+    return `<div class="subject-result"><div><strong>${s}</strong><div class="meter"><i style="width:${p}%"></i></div></div><strong>${p}%</strong></div>`;
+  }).join("");
+  $("focus").innerHTML=weak.length?weak.slice(0,5).map(([s,v])=>`<div class="plan"><span class="tag">Priority</span><strong>${s}</strong><p>${v.correct}/${v.total} correct in the baseline. Start with concepts and then practise questions in this area.</p></div>`).join(""):`<div class="plan"><span class="tag">Baseline</span><strong>No major weak area detected in this short diagnostic</strong><p>The next cycle should increase depth and exam-specific practice.</p></div>`;
+  localStorage.setItem("kbkStudent",JSON.stringify({...student,score:pct,correct,total:questions.length,weakAreas:weak.map(x=>x[0]),subjectResults:by,updatedAt:new Date().toISOString()}));
+  showStep(4);
+}
+function buildPlanAndShow(){
+  const raw=JSON.parse(localStorage.getItem("kbkStudent")||"{}");
+  const focus=raw.weakAreas||[];
+  const first=focus[0]||"your core exam subjects";
+  const days=[
+    ["Day 1 — Diagnose + Foundation",`Rebuild the concepts behind ${first}. Make a short notes page.`],
+    ["Day 2 — Learn + Practice",`Study ${focus[1]||first} and complete a focused practice set.`],
+    ["Day 3 — Timed Practice","Practise the quantitative/reasoning or application component relevant to your exam."],
+    ["Day 4 — Core Subject Cycle","Study one high-priority subject from your exam blueprint."],
+    ["Day 5 — Previous-Year Questions","Attempt exam-specific PYQs and tag every mistake by topic."],
+    ["Day 6 — Revision + Mistake Log","Revisit wrong answers and explain the correct concept in your own words."],
+    ["Day 7 — Mini Mock + Review",`Take a short ${student.target} mock and compare subject-wise accuracy.`]
+  ];
+  $("planIntro").textContent=`Target: ${student.target} • Available: ${student.hours} per day. The cycle is driven by your diagnostic focus areas.`;
+  $("plan").innerHTML=days.map(d=>`<div class="plan"><strong>${d[0]}</strong><p>${d[1]}</p></div>`).join("");
+  localStorage.setItem("kbkStudent",JSON.stringify({...raw,planDays:days.map(d=>d[0])}));
+  showStep(5);
+}
+function goToDashboard(){location.href="dashboard.html"}
+
+$("pathway").addEventListener("change",updateTargets);
+updateTargets();
+showStep(1);
+</script>
+</body>
+</html>
