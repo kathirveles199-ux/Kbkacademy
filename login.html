@@ -1,10 +1,530 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sign in | KBK Academy</title><style>*{box-sizing:border-box}body{margin:0;background:#f4f7f1;color:#10251d;font-family:Inter,system-ui,Arial,sans-serif}a{color:inherit;text-decoration:none}.shell{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}.visual{padding:clamp(28px,6vw,76px);background:radial-gradient(circle at 80% 15%,#c6e83b66,transparent 28%),#073d2b;color:white;display:flex;flex-direction:column;justify-content:space-between}.brand{font-weight:900;letter-spacing:.04em}.brand span{color:#c6e83b}.visual h1{font-size:clamp(38px,5vw,66px);line-height:1.02;letter-spacing:-.04em;max-width:560px}.visual p{color:#c8d9cf;line-height:1.8;max-width:470px}.chips{display:flex;gap:8px;flex-wrap:wrap}.chips span{border:1px solid #ffffff35;border-radius:99px;padding:8px 12px;font-size:12px}.main{display:grid;place-items:center;padding:28px}.card{width:min(440px,100%);background:white;padding:clamp(24px,4vw,40px);border:1px solid #e0e8df;border-radius:24px;box-shadow:0 24px 70px #163b2610}.eyebrow{font-size:11px;font-weight:900;letter-spacing:.16em;color:#0b7a48}.card h2{font-size:32px;letter-spacing:-.04em;margin:10px 0}.muted{color:#6b7b72;font-size:14px;line-height:1.6}.field{margin:18px 0}.field label{display:block;font-size:12px;font-weight:800;margin-bottom:8px}.field input{width:100%;padding:14px;border:1px solid #d5dfd6;border-radius:11px;font:inherit}.btn{width:100%;border:0;border-radius:11px;padding:14px;background:#0b7a48;color:white;font-weight:900;font-size:14px;cursor:pointer}.btn:disabled{opacity:.6}.status{font-size:13px;line-height:1.5;margin-top:14px;overflow-wrap:anywhere}.back{display:inline-block;margin-top:20px;color:#0b7a48;font-weight:800;font-size:13px}@media(max-width:780px){.shell{grid-template-columns:1fr}.visual{padding:25px;min-height:270px}.visual h1{font-size:38px;margin:35px 0 10px}.main{padding:18px;align-items:start}.card{margin:10px 0 30px}}.app{max-width:1100px;margin:auto;padding:24px 16px 60px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.top h1{margin:0;font-size:26px}.btn-small{border:0;border-radius:10px;padding:10px 14px;background:#073d2b;color:white;font-weight:800;cursor:pointer}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:24px}.tile,.lesson{background:white;border:1px solid #e0e8df;border-radius:17px;padding:20px}.tile strong{font-size:25px;display:block}.muted2{color:#6b7b72;font-size:13px;line-height:1.6}.lesson{margin-top:12px}.lesson h3{margin:0 0 8px}.lesson button{margin-top:10px}.statusbox{background:#eaf6e9;border-radius:12px;padding:13px;color:#27583b;font-size:13px;overflow-wrap:anywhere}.hidden{display:none}video{width:100%;max-height:460px;background:#07130e;border-radius:12px;margin-top:12px}</head><body><div class="shell"><section class="visual"><div class="brand">KBK <span>ACADEMY</span><br><small>& CAREER GUIDANCE</small></div><div><div class="chips"><span>Exam preparation</span><span>Recorded lessons</span><span>Career guidance</span></div><h1>Your next chapter starts with a plan.</h1><p>Sign in to continue your KBK learning journey. Your dashboard is selected securely using your account role.</p></div><small>Learn · Prepare · Navigate · Achieve</small></section><main class="main"><section class="card"><div class="eyebrow">LEARNING PORTAL</div><h2>Welcome back.</h2><p class="muted">Sign in with the email and password registered with KBK Academy.</p><form id="form"><div class="field"><label for="email">Email address</label><input id="email" type="email" autocomplete="username" required placeholder="you@example.com"></div><div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required placeholder="Your password"></div><button class="btn" id="submit">Sign in to KBK</button></form><div class="status" id="status" role="status"></div><a class="back" href="index.html">← Back to KBK Academy website</a><p class="muted" style="font-size:12px;margin-top:22px">New student? Contact KBK Academy to register. Public sign-up is not enabled on this portal.</p></section></main></div><script type="module">const SUPABASE_URL = "https://ndcbtoelfkgdnfswliyy.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Z_Omh_DwmcwWy1rKEaLCUg_nKtXB1uN";
-const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm");
-const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-const $=id=>document.getElementById(id);const status=$('status');
-async function routeUser(user){const {data:profile,error}=await supabase.from('profiles').select('role,full_name').eq('id',user.id).maybeSingle();if(error)throw error;if(!profile){throw new Error('Your account profile is not ready. Please contact KBK Academy.')}const role=String(profile.role||'student').toLowerCase();if(role==='admin'||role==='administrator')location.replace('admin.html');else if(role==='mentor')location.replace('mentor-dashboard.html');else if(role==='student')location.replace('student-dashboard.html');else throw new Error('This account has an unsupported role. Contact the administrator.');}
-$('form').addEventListener('submit',async e=>{e.preventDefault();$('submit').disabled=true;status.textContent='Signing in securely…';try{const {data,error}=await supabase.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)throw error;await routeUser(data.user);}catch(err){status.textContent=err.message||'Sign in failed. Please try again.';try{await supabase.auth.signOut({scope:'local'});}catch(_){}}finally{$('submit').disabled=false;}});
-const {data:{session}}=await supabase.auth.getSession();if(session){try{await routeUser(session.user)}catch(err){status.textContent=err.message}}
-</script></body></html>
+  <title>Sign In | KBK Academy</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f7f1;
+      color: #10251d;
+      font-family: Inter, system-ui, Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .visual {
+      padding: clamp(28px, 6vw, 76px);
+      background:
+        radial-gradient(
+          circle at 80% 15%,
+          #c6e83b66,
+          transparent 28%
+        ),
+        #073d2b;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-weight: 900;
+      letter-spacing: .04em;
+    }
+
+    .brand span {
+      color: #c6e83b;
+    }
+
+    .visual h1 {
+      font-size: clamp(38px, 5vw, 66px);
+      line-height: 1.02;
+      letter-spacing: -.04em;
+      max-width: 560px;
+    }
+
+    .visual p {
+      color: #c8d9cf;
+      line-height: 1.8;
+      max-width: 470px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chips span {
+      border: 1px solid #ffffff35;
+      border-radius: 99px;
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+
+    .main {
+      display: grid;
+      place-items: center;
+      padding: 28px;
+    }
+
+    .card {
+      width: min(440px, 100%);
+      background: white;
+      padding: clamp(24px, 4vw, 40px);
+      border: 1px solid #e0e8df;
+      border-radius: 24px;
+      box-shadow: 0 24px 70px #163b2610;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .16em;
+      color: #0b7a48;
+    }
+
+    .card h2 {
+      font-size: 32px;
+      letter-spacing: -.04em;
+      margin: 10px 0;
+    }
+
+    .muted {
+      color: #6b7b72;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .field {
+      margin: 18px 0;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d5dfd6;
+      border-radius: 11px;
+      font: inherit;
+    }
+
+    .field input:focus {
+      outline: 2px solid #0b7a48;
+      outline-offset: 2px;
+    }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 11px;
+      padding: 14px;
+      background: #0b7a48;
+      color: white;
+      font-weight: 900;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    .status {
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 20px;
+      color: #0b7a48;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .app {
+      max-width: 1100px;
+      margin: auto;
+      padding: 24px 16px 60px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .top h1 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    .btn-small {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      background: #073d2b;
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(230px, 1fr)
+      );
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .tile,
+    .lesson {
+      background: white;
+      border: 1px solid #e0e8df;
+      border-radius: 17px;
+      padding: 20px;
+    }
+
+    .tile strong {
+      font-size: 25px;
+      display: block;
+    }
+
+    .muted2 {
+      color: #6b7b72;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .lesson {
+      margin-top: 12px;
+    }
+
+    .lesson h3 {
+      margin: 0 0 8px;
+    }
+
+    .lesson button {
+      margin-top: 10px;
+    }
+
+    .statusbox {
+      background: #eaf6e9;
+      border-radius: 12px;
+      padding: 13px;
+      color: #27583b;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    video {
+      width: 100%;
+      max-height: 460px;
+      background: #07130e;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .visual {
+        padding: 25px;
+        min-height: 270px;
+      }
+
+      .visual h1 {
+        font-size: 38px;
+        margin: 35px 0 10px;
+      }
+
+      .main {
+        padding: 18px;
+        align-items: start;
+      }
+
+      .card {
+        margin: 10px 0 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+
+    <section class="visual">
+      <div class="brand">
+        KBK <span>ACADEMY</span>
+        <br>
+        <small>& CAREER GUIDANCE</small>
+      </div>
+
+      <div>
+        <div class="chips">
+          <span>Exam preparation</span>
+          <span>Recorded lessons</span>
+          <span>Career guidance</span>
+        </div>
+
+        <h1>Your next chapter starts with a plan.</h1>
+
+        <p>
+          Sign in to continue your KBK learning journey.
+          Your dashboard is selected securely using your account role.
+        </p>
+      </div>
+
+      <small>Learn · Prepare · Navigate · Achieve</small>
+    </section>
+
+    <main class="main">
+      <section class="card">
+
+        <div class="eyebrow">LEARNING PORTAL</div>
+
+        <h2>Welcome back.</h2>
+
+        <p class="muted">
+          Sign in with the email and password registered with KBK Academy.
+        </p>
+
+        <form id="form">
+
+          <div class="field">
+            <label for="email">Email address</label>
+
+            <input
+              id="email"
+              type="email"
+              autocomplete="username"
+              required
+              placeholder="you@example.com"
+            >
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+
+            <input
+              id="password"
+              type="password"
+              autocomplete="current-password"
+              required
+              placeholder="Your password"
+            >
+          </div>
+
+          <button class="btn" id="submit" type="submit">
+            Sign in to KBK
+          </button>
+
+        </form>
+
+        <div class="status" id="status" role="status" aria-live="polite"></div>
+
+        <a class="back" href="index.html">
+          ← Back to KBK Academy website
+        </a>
+
+        <p class="muted" style="font-size:12px;margin-top:22px">
+          New student? Contact KBK Academy to register.
+          Public sign-up is not enabled on this portal.
+        </p>
+
+      </section>
+    </main>
+
+  </div>
+
+  <script type="module">
+    const SUPABASE_URL =
+      "https://ndcbtoelfkgdnfswliyy.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_Z_Omh_DwmcwWy1rKEaLCUg_nKtXB1uN";
+
+    const status = document.getElementById("status");
+    const submitButton = document.getElementById("submit");
+    const form = document.getElementById("form");
+
+    let supabase;
+
+    function showError(message) {
+      status.textContent = message;
+    }
+
+    async function initializeSupabase() {
+      try {
+        status.textContent = "Loading secure sign-in…";
+
+        const { createClient } = await import(
+          "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm"
+        );
+
+        supabase = createClient(
+          SUPABASE_URL,
+          SUPABASE_PUBLISHABLE_KEY
+        );
+
+        status.textContent = "";
+
+        // Restore an existing session if available.
+        const {
+          data: { session },
+          error
+        } = await supabase.auth.getSession();
+
+        if (error) {
+          throw error;
+        }
+
+        if (session) {
+          await routeUser(session.user);
+        }
+
+      } catch (error) {
+        console.error("Supabase initialization error:", error);
+
+        showError(
+          "Unable to load the sign-in service. " +
+          "Check your internet connection and reload the page."
+        );
+      }
+    }
+
+    async function routeUser(user) {
+      const {
+        data: profile,
+        error
+      } = await supabase
+        .from("profiles")
+        .select("role, full_name")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (error) {
+        throw error;
+      }
+
+      if (!profile) {
+        throw new Error(
+          "Your account profile is not ready. " +
+          "Please contact KBK Academy."
+        );
+      }
+
+      const role = String(profile.role || "")
+        .trim()
+        .toLowerCase();
+
+      if (role === "admin" || role === "administrator") {
+        window.location.replace("admin.html");
+
+      } else if (role === "mentor") {
+        window.location.replace("mentor-dashboard.html");
+
+      } else if (role === "student") {
+        window.location.replace("student-dashboard.html");
+
+      } else {
+        throw new Error(
+          "This account has an unsupported role. " +
+          "Contact the administrator."
+        );
+      }
+    }
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      if (!supabase) {
+        showError(
+          "The sign-in service is not ready. Please reload the page."
+        );
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Signing in…";
+      showError("Signing in securely…");
+
+      try {
+        const email = document
+          .getElementById("email")
+          .value
+          .trim();
+
+        const password = document
+          .getElementById("password")
+          .value;
+
+        const {
+          data,
+          error
+        } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        if (error) {
+          throw error;
+        }
+
+        await routeUser(data.user);
+
+      } catch (error) {
+        console.error("Sign-in error:", error);
+
+        showError(
+          error.message ||
+          "Sign-in failed. Please check your details and try again."
+        );
+
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Sign in to KBK";
+      }
+    });
+
+    initializeSupabase();
+  </script>
+</body>
+</html>
