@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"><title>KBK Academy | Student Access Test</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 760px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    .card {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      box-shadow: 0 3px 12px #0000000d;
+    }
+
+    input, button {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    input {
+      border: 1px solid #ccd2dc;
+    }
+
+    button {
+      border: 0;
+      background: #164e9b;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    #status {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    video {
+      width: 100%;
+      margin-top: 12px;
+      background: black;
+      border-radius: 8px;
+    }
+
+    .muted {
+      color: #64748b;
+      font-size: 13px;
+    }
+  
+/* KBK Academy unified visual identity: Modern Gurukulam + Examination Command Centre */
+:root{--kbk-forest:#103c2d;--kbk-deep:#082a21;--kbk-gold:#c7a34f;--kbk-ivory:#f7f4eb;--kbk-ink:#17271f;--kbk-muted:#66756b;--kbk-line:#e6e0d2}
+html{scroll-behavior:smooth}body{font-family:'DM Sans',system-ui,Arial,sans-serif!important;background:var(--kbk-ivory)!important;color:var(--kbk-ink)!important}h1,h2,h3,.logo-copy b{font-family:'Playfair Display',Georgia,serif!important;letter-spacing:-.025em}a{transition:color .18s ease,background .18s ease}button,.button,.nav-button{transition:transform .18s ease,background .18s ease}button:hover,.button:hover,.nav-button:hover{transform:translateY(-1px)}.site-header{background:#fffdf8f2!important;border-bottom:1px solid var(--kbk-line)!important;backdrop-filter:blur(16px)}.logo-orbit{background:var(--kbk-forest)!important;border-color:var(--kbk-gold)!important;color:var(--kbk-gold)!important}.logo-copy b{color:var(--kbk-forest)!important}.logo-copy small{color:#876b2c!important}.nav-button,.button-primary{background:var(--kbk-forest)!important;color:white!important;border-color:var(--kbk-forest)!important}.button-secondary{border-color:var(--kbk-gold)!important;color:var(--kbk-forest)!important;background:#fffdf8!important}.hero{background:radial-gradient(circle at 82% 28%,#c7a34f24,transparent 24%),radial-gradient(circle at 12% 50%,#103c2d0d,transparent 28%),var(--kbk-ivory)!important}.hero h1 em,h1 em,h2 em{color:var(--kbk-forest)!important}.micro,.eyebrow{color:#8b6b24!important}.pulse{background:var(--kbk-gold)!important;box-shadow:0 0 0 5px #c7a34f20!important}.section{scroll-margin-top:85px}.programs,.section:nth-child(even){background:#fffdf8!important}.program-card{border-radius:16px!important;border-color:var(--kbk-line)!important}.main-program{background:var(--kbk-forest)!important;border-color:var(--kbk-forest)!important}.ticker{background:var(--kbk-deep)!important}.ticker b{color:var(--kbk-gold)!important}.card,.tile,.lesson,.plan,.result,.question,.blueprint{border-color:var(--kbk-line)!important;box-shadow:0 12px 32px #183b2508!important;border-radius:16px!important}.btn,.btn-small,.primary{background:var(--kbk-forest)!important;color:#fff!important;border-radius:9px!important}.statusbox{background:#edf3e8!important;color:var(--kbk-forest)!important;border:1px solid #d8e4d4!important}.sidebar{background:var(--kbk-deep)!important}.nav button:hover,.nav button.active{background:#1c4d3a!important}.main{background:var(--kbk-ivory)!important}.field input,.field select,.field textarea{border-color:#ded8ca!important;border-radius:9px!important}::selection{background:#c7a34f55}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <h1 style="display:flex;align-items:center;gap:12px;color:#123c2d"><img src="assets/kbk-emblem.svg" alt="" style="width:54px;height:54px"> KBK Academy</h1><p style="letter-spacing:.18em;color:#b58b34">KNOWLEDGE · BRILLIANCE · SKILL</p>
+  <p>Student recording access test</p>
+
+  <div class="card" id="loginCard">
+    <h2>Student Login</h2>
+
+    <form id="loginForm">
+      <label>Email</label>
+      <input
+        id="email"
+        type="email"
+        value="sabithamurugesan2004@gmail.com"
+        required
+        autocomplete="username"
+      >
+
+      <label>Password</label>
+      <input
+        id="password"
+        type="password"
+        required
+        autocomplete="current-password"
+      >
+
+      <button type="submit" id="loginButton">Sign in</button>
+    </form>
+
+    <p class="muted">
+      Use your test student account. This page does not send
+      your password to anyone other than Supabase Auth.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Assigned Lessons</h2>
+    <button id="loadButton" disabled>Load My Lessons</button>
+    <div id="lessons"></div>
+  </div>
+
+  <div class="card">
+    <h2>Recording Player</h2>
+    <p id="status">Please sign in first.</p>
+    <video id="player" controls playsinline></video>
+  </div>
+
+  <script type="module">
+    import { createClient } from
+      "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL =
+      "https://ndcbtoelfkgdnfswliyy.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_Z_Omh_DwmcwWy1rKEaLCUg_nKtXB1uN";
+
+    const supabase = createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const status = document.getElementById("status");
+    const lessonsDiv = document.getElementById("lessons");
+    const loadButton = document.getElementById("loadButton");
+    const player = document.getElementById("player");
+
+    let currentUser = null;
+
+    function showStatus(message) {
+      status.textContent = message;
+    }
+
+    document.getElementById("loginForm")
+      .addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const button = document.getElementById("loginButton");
+        button.disabled = true;
+        showStatus("Signing in...");
+
+        try {
+          const { data, error } = await supabase.auth.signInWithPassword({
+            email: document.getElementById("email").value.trim(),
+            password: document.getElementById("password").value
+          });
+
+          if (error) throw error;
+
+          currentUser = data.user;
+
+          document.getElementById("loginCard").style.display = "none";
+          loadButton.disabled = false;
+
+          showStatus("Signed in. Loading assigned lessons...");
+          await loadLessons();
+
+        } catch (error) {
+          showStatus("Login failed: " + error.message);
+        } finally {
+          button.disabled = false;
+        }
+      });
+
+    async function loadLessons() {
+      lessonsDiv.replaceChildren();
+      player.removeAttribute("src");
+      player.load();
+
+      // Fetch assignments visible to this authenticated student.
+      const { data: assignments, error } = await supabase
+        .from("lesson_assignments")
+        .select("lesson_id, batch_id, student_id")
+        .or(`student_id.eq.${currentUser.id},batch_id.not.is.null`);
+
+      if (error) {
+        showStatus("Could not load assignments: " + error.message);
+        return;
+      }
+
+      // Confirm batch memberships through RLS.
+      const { data: memberships, error: membershipError } = await supabase
+        .from("batch_members")
+        .select("batch_id")
+        .eq("student_id", currentUser.id);
+
+      if (membershipError) {
+        showStatus("Could not load memberships: " + membershipError.message);
+        return;
+      }
+
+      const myBatchIds = new Set((memberships || []).map(m => m.batch_id));
+
+      const lessonIds = [...new Set(
+        (assignments || [])
+          .filter(a =>
+            a.student_id === currentUser.id ||
+            (a.batch_id && myBatchIds.has(a.batch_id))
+          )
+          .map(a => a.lesson_id)
+      )];
+
+      if (!lessonIds.length) {
+        showStatus("No assigned lessons found.");
+        return;
+      }
+
+      const { data: lessons, error: lessonError } = await supabase
+        .from("lessons")
+        .select("id, title, description, subject, topic, storage_path")
+        .in("id", lessonIds);
+
+      if (lessonError) {
+        showStatus("Could not load lessons: " + lessonError.message);
+        return;
+      }
+
+      showStatus(`Found ${lessons.length} assigned lesson(s).`);
+
+      for (const lesson of lessons) {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const title = document.createElement("h3");
+        title.textContent = lesson.title;
+
+        const detail = document.createElement("p");
+        detail.textContent =
+          [lesson.subject, lesson.topic].filter(Boolean).join(" · ");
+
+        const button = document.createElement("button");
+        button.textContent = "Watch Recording";
+
+        button.addEventListener("click", async () => {
+          if (!lesson.storage_path) {
+            showStatus("No recording is linked to this lesson.");
+            return;
+          }
+
+          showStatus("Requesting access to recording...");
+
+          // Requests a temporary URL through the authenticated client.
+          const { data, error } = await supabase.storage
+            .from("kbk-recordings")
+            .createSignedUrl(lesson.storage_path, 300);
+
+          if (error) {
+            showStatus("Recording access denied or failed: " + error.message);
+            return;
+          }
+
+          player.src = data.signedUrl;
+          player.load();
+
+          showStatus("Temporary recording URL created. Press Play.");
+          player.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+
+        card.append(title, detail, button);
+        lessonsDiv.appendChild(card);
+      }
+    }
+
+    loadButton.addEventListener("click", loadLessons);
+
+    // Do not persist this test page's session across browser restarts.
+    window.addEventListener("pagehide", () => {
+      supabase.auth.signOut({ scope: "local" });
+    });
+  </script>
+</body>
+</html>
