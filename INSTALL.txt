@@ -1,0 +1,32 @@
+KBK Academy — Student Dashboard v2
+===================================
+
+Replace ONLY student-dashboard.html in your GitHub repository with this file.
+Keep assets/kbk-emblem.svg and favicon.svg in their existing paths.
+
+Design:
+- Horizontal top navigation
+- Scenic academic-style welcome banner (CSS/SVG illustration)
+- Four compact stats
+- Today's Study Plan + Upcoming Exams
+- My Courses + Recent Lessons
+- Responsive mobile layout
+
+Automatic course discovery:
+The dashboard reads batch_members for the signed-in student, resolves batches,
+then resolves the linked courses. When an authorised mentor/admin adds the
+student to a batch, the course should appear on refresh automatically, provided
+the existing foreign-key columns are named batch_id and course_id as in the
+current KBK schema.
+
+Current data boundaries:
+- Assigned lessons are read from lesson_assignments and lessons.
+- Completed counts are read from lesson_progress rows where recognizable
+  completion fields are present. No completion percentages are fabricated.
+- Course progress percentages are not shown as real values until the exact
+  lesson_progress schema and completion workflow are confirmed.
+- Upcoming exams are linked to the homepage because no exam-date table/schema
+  has been confirmed in the known schema.
+- This page does not yet write progress records. To automatically track a
+  lesson start/completion across devices, we must verify the lesson_progress
+  columns and then implement safe upsert/update behavior against those fields.
